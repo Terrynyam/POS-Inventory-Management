@@ -1,0 +1,29 @@
+server:
+  port: 7405
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost\MSSQLSERVER:1433;database=pos_product_database;encrypt=true;trustServerCertificate=true
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: 'terry'
+
+  jpa:
+      hibernate:
+        ddl-auto: update
+        show-sql: true
+        format_sql: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/POS-System
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+
+jwt:
+  auth:
+    converter:
+      resource-id: POS-System
+      principal-attribute: preferred_username
